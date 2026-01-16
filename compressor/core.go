@@ -1,6 +1,7 @@
 package compressor
 
 import (
+	"C"
 	"image"
 	"image/jpeg"
 	"image/png"
