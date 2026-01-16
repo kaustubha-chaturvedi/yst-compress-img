@@ -29,6 +29,7 @@ var compressCmd = &cobra.Command{
 	Short: "Compress a single image or an entire directory",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		if len(args) < 1 && batchDir == "" {
+			cmd.Usage()
 			return fmt.Errorf("missing image or directory path")
 		}
 
@@ -81,11 +82,14 @@ var compressCmd = &cobra.Command{
 }
 
 func init() {
+	compressCmd.Flags().Bool("help", false, "show help")
+	compressCmd.Flags().Lookup("help").Shorthand = ""
+	
 	compressCmd.Flags().IntVarP(&quality, "quality", "q", 85, "JPEG/WebP quality (1-100)")
 	compressCmd.Flags().StringVarP(&maxSize, "max-size", "m", "", "target max size (e.g. 500kb, 1mb)")
-	compressCmd.Flags().BoolVarP(&lossless, "lossless", "l", true, "lossless mode")
-	compressCmd.Flags().IntVar(&width, "width", 0, "resize width")
-	compressCmd.Flags().IntVar(&height, "height", 0, "resize height")
+	compressCmd.Flags().BoolVarP(&lossless, "lossless", "l", false, "lossless mode")
+	compressCmd.Flags().IntVarP(&width, "width", "w", 0, "resize width")
+	compressCmd.Flags().IntVarP(&height, "height", "h", 0, "resize height")
 	compressCmd.Flags().BoolVarP(&autoMode, "auto", "a", false, "smart mode")
 	compressCmd.Flags().StringVarP(&output, "output", "o", "", "output file path (default: <file name>_compressed.<ext>)")
 
