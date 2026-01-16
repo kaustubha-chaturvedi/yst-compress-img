@@ -71,6 +71,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build plugin
+        shell: bash
         run: |
           mkdir -p build
           export CGO_ENABLED=1
@@ -79,6 +80,7 @@ jobs:
             BIN_NAME="${BIN_NAME}.exe"
           fi
           GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} go build -o build/${BIN_NAME} .
+
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
