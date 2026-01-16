@@ -17,7 +17,7 @@ func loadImageAnyFormat(path string) (image.Image, error) {
 		return img, nil
 	}
 
-	return nil, err
+	return DecodeHeicAvif(path)
 }
 
 // lossy quality compression 
@@ -43,6 +43,10 @@ func CompressLossless(in, out string) error {
 		return webp.Save(out, img, &webp.Options{Lossless: true})
 	}
 
+	img, err = DecodeHeicAvif(in)
+	if err != nil {
+		return err
+	}
 	return webp.Save(out, img, &webp.Options{Lossless: true})
 }
 
