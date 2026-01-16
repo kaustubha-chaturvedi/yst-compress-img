@@ -84,8 +84,8 @@ func init() {
 	compressCmd.Flags().IntVarP(&quality, "quality", "q", 85, "JPEG/WebP quality (1-100)")
 	compressCmd.Flags().StringVarP(&maxSize, "max-size", "m", "", "target max size (e.g. 500kb, 1mb)")
 	compressCmd.Flags().BoolVarP(&lossless, "lossless", "l", true, "lossless mode")
-	compressCmd.Flags().IntVarP(&width, "width", "w", 0, "resize width")
-	compressCmd.Flags().IntVarP(&height, "height", "h", 0, "resize height")
+	compressCmd.Flags().IntVar(&width, "width", 0, "resize width")
+	compressCmd.Flags().IntVar(&height, "height", 0, "resize height")
 	compressCmd.Flags().BoolVarP(&autoMode, "auto", "a", false, "smart mode")
 	compressCmd.Flags().StringVarP(&output, "output", "o", "", "output file path (default: <file name>_compressed.<ext>)")
 
