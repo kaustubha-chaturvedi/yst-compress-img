@@ -1,0 +1,8 @@
+# yst-compress-img
+
+YST plugin for image operations.
+
+## Edit the go mod with you github username and try publishing the plugin to be listed on index for download
+
+## To run locally copy plugin to your `yeast` directory 
+
