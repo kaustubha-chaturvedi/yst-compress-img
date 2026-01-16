@@ -25,7 +25,7 @@ var (
 )
 
 var compressCmd = &cobra.Command{
-	Use:   "compress <image | directory>",
+	Use:   "compress <image | -b directory>",
 	Short: "Compress a single image or an entire directory",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		if len(args) < 1 && batchDir == "" {
@@ -78,6 +78,11 @@ var compressCmd = &cobra.Command{
 		default:
 			return compressor.CompressQuality(in, output, quality)
 		}
+	},
+	SilenceErrors: true,
+	SilenceUsage:  true,
+	CompletionOptions: cobra.CompletionOptions{
+		DisableDefaultCmd: true,
 	},
 }
 

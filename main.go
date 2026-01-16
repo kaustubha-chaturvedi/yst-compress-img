@@ -4,21 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
-
-	"github.com/spf13/cobra"
 )
 
 var embeddedMetadata = `{"name":"compress image","domain":"image","alias":"compress-img","version":"0.1.0"}`
-
-var rootCmd = &cobra.Command{
-	Use:   "yst-compress-img",
-	Long:  "Plugin for image operations",
-	SilenceErrors: true,
-	SilenceUsage:  true,
-	CompletionOptions: cobra.CompletionOptions{
-		DisableDefaultCmd: true,
-	},
-}
 
 func main() {
 	if len(os.Args) > 1 && os.Args[1] == "__yst_metadata" {
@@ -27,9 +15,7 @@ func main() {
 		return
 	}
 
-	rootCmd.AddCommand(compressCmd)
-
-	if err := rootCmd.Execute(); err != nil {
+	if err := compressCmd.Execute(); err != nil {
 		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
 		os.Exit(1)
 	}
