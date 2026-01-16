@@ -21,7 +21,7 @@ var (
 
 	batchDir  string
 	recursive bool
-	parallel  int
+	workers  int
 )
 
 var compressCmd = &cobra.Command{
@@ -42,7 +42,7 @@ var compressCmd = &cobra.Command{
 				height,
 				autoMode,
 				recursive,
-				parallel,
+				workers,
 			)
 		}
 
@@ -58,24 +58,24 @@ var compressCmd = &cobra.Command{
 		}
 
 		switch {
-			case autoMode:
-				return compressor.CompressAuto(in, output)
+		case autoMode:
+			return compressor.CompressAuto(in, output)
 
-			case lossless:
-				return compressor.CompressLossless(in, output)
+		case lossless:
+			return compressor.CompressLossless(in, output)
 
-			case maxSize != "":
-				sz, err := compressor.ParseSize(maxSize)
-				if err != nil {
-					return err
-				}
-				return compressor.CompressToMaxSize(in, output, sz)
+		case maxSize != "":
+			sz, err := compressor.ParseSize(maxSize)
+			if err != nil {
+				return err
+			}
+			return compressor.CompressToMaxSize(in, output, sz)
 
-			case width > 0 || height > 0:
-				return compressor.CompressResize(in, output, width, height, quality)
+		case width > 0 || height > 0:
+			return compressor.CompressResize(in, output, width, height, quality)
 
-			default:
-				return compressor.CompressQuality(in, output, quality)
+		default:
+			return compressor.CompressQuality(in, output, quality)
 		}
 	},
 }
@@ -87,9 +87,9 @@ func init() {
 	compressCmd.Flags().IntVarP(&width, "width", "w", 0, "resize width")
 	compressCmd.Flags().IntVarP(&height, "height", "h", 0, "resize height")
 	compressCmd.Flags().BoolVarP(&autoMode, "auto", "a", false, "smart mode")
-	compressCmd.Flags().StringVarP(&output, "output", "o", "", "output file path (default: <input>_compressed.<ext>)")
+	compressCmd.Flags().StringVarP(&output, "output", "o", "", "output file path (default: <file name>_compressed.<ext>)")
 
 	compressCmd.Flags().StringVarP(&batchDir, "batch", "b", "", "directory to compress recursively or non-recursively")
 	compressCmd.Flags().BoolVarP(&recursive, "recursive", "r", false, "scan directory recursively in batch mode")
-	compressCmd.Flags().IntVarP(&parallel, "parallel", "p", 4, "parallel workers for batch mode")
+	compressCmd.Flags().IntVarP(&workers, "parallel", "p", 4, "parallel workers for batch mode")
 }

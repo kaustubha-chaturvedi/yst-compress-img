@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"image"
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 )
@@ -51,4 +52,10 @@ func LoadImage(path string) (image.Image, string, error) {
 
 	img, format, err := image.Decode(f)
 	return img, format, err
+}
+
+// outputPathFor - output file path for the compressed image by adding _compressed before the file extension
+func outputPathFor(path string) string {
+	ext := filepath.Ext(path)
+	return strings.TrimSuffix(path, ext) + "_compressed" + ext
 }
